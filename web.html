@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FrovenMC Webstore</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <style>
+    body {
+      background: url('https://i.pinimg.com/originals/c4/0f/fb/c40ffb76fc44fc61823d49b7d5b1a66f.jpg') no-repeat center center fixed;
+      background-size: cover;
+      font-family: 'Orbitron', sans-serif;
+      color: #ff3333;
+      overflow-x: hidden;
+    }
+    .glow-text {
+      text-shadow: 0 0 15px #ff0000, 0 0 30px #cc0000;
+    }
+    .cart-box {
+      background-color: rgba(10, 0, 0, 0.85);
+      border: 2px dashed #cc0000;
+      border-radius: 0.5rem;
+      padding: 1rem;
+    }
+    .popup {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: #1a0000;
+      color: #ff6666;
+      padding: 2rem;
+      border: 3px solid #990000;
+      border-radius: 1rem;
+      box-shadow: 0 0 20px #cc0000;
+      z-index: 9999;
+      display: none;
+    }
+    .animated-skin {
+      width: 200px;
+      animation: float 3s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    button {
+      background-color: #330000;
+      color: #ff3333;
+      border: 1px solid #ff1a1a;
+      padding: 0.5rem 1rem;
+      border-radius: 0.375rem;
+      transition: all 0.3s ease-in-out;
+    }
+    button:hover {
+      background-color: #660000;
+      transform: scale(1.05);
+    }
+  </style>
+<link href="https://fonts.googleapis.com/css2?family=Creepster&display=swap" rel="stylesheet">
+</head>
+<body class="min-h-screen">
+  <header class="text-center py-6 bg-black bg-opacity-60 border-b border-red-900">
+  <h1 class="text-6xl font-extrabold glow-text" style="font-family: 'Creepster', cursive; color: #ff1a1a; text-shadow: 3px 3px 0 #000000, 5px 5px 0 #330000;">FrovenMC</h1>
+    <p class="text-red-500 mt-2 italic text-lg tracking-wide" style="text-shadow: 2px 2px #000;">Born in blood. Forged in chaos. Conquer the arena of shadows — only the ruthless survive FrovenMC.</p>
+  </header>
+
+  
+
+  <main class="p-6 bg-black bg-opacity-70 rounded">
+    <section class="mb-10">
+      <h2 class="text-3xl text-red-500 mb-4">🩸 Enter Your Username</h2>
+      <input type="text" id="username" placeholder="Minecraft Username" class="w-full p-3 bg-black border border-red-800 rounded text-white">
+    </section>
+
+    <!-- Ranks Section -->
+    <section class="mb-10">
+      <h2 class="text-3xl text-red-500 mb-4">⚔️ Devil Ranks</h2>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div class="bg-black bg-opacity-80 border border-red-700 p-4 rounded">
+          <h3 class="text-2xl font-bold">Shadowblade</h3>
+          <p class="text-gray-400">Stealth and blood precision</p>
+          <p class="text-red-300">₹99</p>
+          <button onclick="addToCart('Shadowblade Rank', 99)">Add to Cart</button>
+        </div>
+        <div class="bg-black bg-opacity-80 border border-red-700 p-4 rounded">
+          <h3 class="text-2xl font-bold">Demon Warrior</h3>
+          <p class="text-gray-400">Unleashes rage and chaos</p>
+          <p class="text-red-300">₹199</p>
+          <button onclick="addToCart('Demon Warrior Rank', 199)">Add to Cart</button>
+        </div>
+        <div class="bg-black bg-opacity-80 border border-red-700 p-4 rounded">
+          <h3 class="text-2xl font-bold">Bloodlord</h3>
+          <p class="text-gray-400">Master of pain and PvP death</p>
+          <p class="text-red-300">₹299</p>
+          <button onclick="addToCart('Bloodlord Rank', 299)">Add to Cart</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Coins Section -->
+    <section class="mb-10">
+      <h2 class="text-3xl text-red-500 mb-4">💰 Coin Packs</h2>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div class="bg-black bg-opacity-70 border border-yellow-600 p-4 rounded">
+          <h3 class="text-xl font-bold text-white">100 Coins</h3>
+          <p class="text-yellow-300">₹49</p>
+          <button onclick="addToCart('100 Coins', 49)">Add to Cart</button>
+        </div>
+        <div class="bg-black bg-opacity-70 border border-yellow-600 p-4 rounded">
+          <h3 class="text-xl font-bold text-white">250 Coins</h3>
+          <p class="text-yellow-300">₹99</p>
+          <button onclick="addToCart('250 Coins', 99)">Add to Cart</button>
+        </div>
+        <div class="bg-black bg-opacity-70 border border-yellow-600 p-4 rounded">
+          <h3 class="text-xl font-bold text-white">500 Coins</h3>
+          <p class="text-yellow-300">₹149</p>
+          <button onclick="addToCart('500 Coins', 149)">Add to Cart</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Cart Section -->
+    <section class="mb-10">
+      <h2 class="text-3xl text-red-500 mb-4">🛒 Your Hell Cart</h2>
+      <div id="cart" class="cart-box text-white mb-4"></div>
+      <button onclick="checkoutCart()">Checkout</button>
+    </section>
+  </main>
+
+  <footer class="text-center text-red-600 py-6 border-t border-red-900">
+    © 2025 FrovenMC. Forge your PvP destiny in fire...
+  </footer>
+
+  <div id="thankYouPopup" class="popup">
+    <h2 class="text-2xl font-bold mb-2">🔥 Thank You, PvP Devil!</h2>
+    <p>Your wrathful purchase is summoned in blood and flame.</p>
+  </div>
+
+  <script>
+    const cartItems = [];
+    function addToCart(item, price) {
+      const username = document.getElementById("username").value;
+      if (!username) {
+        alert("Please enter your Minecraft username!");
+        return;
+      }
+      cartItems.push({ item, price });
+      alert(`☠️ ${item} added to cart.`);
+      updateCartDisplay();
+    }
+    function updateCartDisplay() {
+      const cartDiv = document.getElementById("cart");
+      cartDiv.innerHTML = '';
+      let total = 0;
+      cartItems.forEach(entry => {
+        total += entry.price;
+        cartDiv.innerHTML += `<div class='mb-2'>${entry.item} - ₹${entry.price}</div>`;
+      });
+      cartDiv.innerHTML += `<div class='mt-4 font-bold text-red-400'>Total: ₹${total}</div>`;
+    }
+    function checkoutCart() {
+      const username = document.getElementById("username").value;
+      if (!username) {
+        alert("Please enter your Minecraft username!");
+        return;
+      }
+      if (cartItems.length === 0) {
+        alert("Your cart is empty!");
+        return;
+      }
+      const summary = cartItems.map(entry => `- ${entry.item} (₹${entry.price})`).join("\n");
+      const total = cartItems.reduce((sum, entry) => sum + entry.price, 0);
+      fetch("https://discord.com/api/webhooks/1381484768750997554/CjluT3nh8Nw6KFIx8gZH52Jw_G9BoUSxPjGDICNcAuI28N2-KmRsmZ10vovc6p5wF4qJ", {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          content: `😈 **New FrovenMC Purchase** by ${username} 🔥\n${summary}\n💰 Total: ₹${total}`
+        })
+      });
+      showThankYou();
+      cartItems.length = 0;
+      updateCartDisplay();
+    }
+    function showThankYou() {
+      const popup = document.getElementById("thankYouPopup");
+      popup.style.display = "block";
+      setTimeout(() => {
+        popup.style.display = "none";
+      }, 4000);
+    }
+  </script>
+</body>
+</html>
